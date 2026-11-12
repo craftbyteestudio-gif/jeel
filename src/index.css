@@ -132,10 +132,13 @@ img {
   box-shadow: 0 0 0 4px rgba(185, 78, 107, 0.1);
 }
 
+/* ── Envelope ───────────────────────────────────────────────── */
+
 .envelope {
   position: relative;
   width: 100%;
-  height: 170px;
+  /* min-height instead of fixed height so text never overflows */
+  min-height: 140px;
   overflow: hidden;
   border: 1px solid rgba(155, 120, 111, 0.25);
   border-radius: 1.2rem;
@@ -182,9 +185,13 @@ img {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1.2rem;
+  padding: 1.4rem 1.2rem;
   z-index: 1;
+  /* safety: never overflow silently */
+  overflow: hidden;
 }
+
+/* ── Paper Button ───────────────────────────────────────────── */
 
 .paper-button {
   display: inline-flex;
@@ -194,9 +201,10 @@ img {
   border-radius: 999px;
   background: #fffaf7;
   color: #30252a;
-  padding: 0.85rem 1.5rem;
+  padding: 0.7rem 1.4rem;
   font-family: 'Caveat', cursive;
-  font-size: clamp(1.7rem, 2vw, 2.5rem);
+  /* Responsive font: smaller on mobile, larger on desktop */
+  font-size: clamp(1.3rem, 4vw, 2rem);
   line-height: 1;
   box-shadow: 0 10px 18px rgba(48, 37, 42, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -207,13 +215,16 @@ img {
   box-shadow: 0 12px 20px rgba(48, 37, 42, 0.08);
 }
 
+/* ── Heart Doodle ───────────────────────────────────────────── */
+
 .heart-doodle {
   position: absolute;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  /* 44px minimum touch target */
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
   background: rgba(239, 166, 184, 0.2);
   border: 1px solid rgba(185, 78, 107, 0.2);
@@ -225,19 +236,19 @@ img {
 }
 
 @keyframes pop {
-  0% {
-    transform: scale(0.92) rotate(-4deg);
-  }
-  100% {
-    transform: scale(1.06) rotate(4deg);
-  }
+  0% { transform: scale(0.92) rotate(-4deg); }
+  100% { transform: scale(1.06) rotate(4deg); }
 }
+
+/* ── Music Button ───────────────────────────────────────────── */
 
 .music-button {
   font-family: 'Caveat', cursive;
-  font-size: 1.8rem;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
   line-height: 1;
 }
+
+/* ── Starfield ──────────────────────────────────────────────── */
 
 .starfield {
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.25) 1px, transparent 1.4px);
@@ -245,12 +256,15 @@ img {
   background-position: center;
 }
 
+/* ── Checkbox ───────────────────────────────────────────────── */
+
 .checkbox-box {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 25px;
-  height: 25px;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
   border-radius: 0.65rem;
   border: 1.5px solid rgba(118, 95, 87, 0.4);
   background: #fffaf7;
@@ -265,8 +279,10 @@ img {
   border-color: rgba(185, 78, 107, 0.4);
 }
 
+/* ── Paper Letter ───────────────────────────────────────────── */
+
 .paper-letter {
-  min-height: 260px;
+  min-height: 200px;
 }
 
 .paper-letter::before {
@@ -276,6 +292,8 @@ img {
   background: linear-gradient(135deg, rgba(239, 166, 184, 0.08), transparent 40%);
   pointer-events: none;
 }
+
+/* ── Confetti ───────────────────────────────────────────────── */
 
 .confetti {
   position: absolute;
@@ -288,20 +306,12 @@ img {
 }
 
 @keyframes fall {
-  0% {
-    transform: translateY(-8px) rotate(0deg) scale(0.8);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(90px) rotate(180deg) scale(1);
-    opacity: 0;
-  }
+  0% { transform: translateY(-8px) rotate(0deg) scale(0.8); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(90px) rotate(180deg) scale(1); opacity: 0; }
 }
 
-/* ── Photo Grid ────────────────────────────────────────────── */
+/* ── Photo Grid ─────────────────────────────────────────────── */
 
 .photo-grid-card {
   display: flex;
@@ -313,19 +323,17 @@ img {
   padding: 0.5rem;
   text-align: left;
   box-shadow: 0 10px 24px rgba(48, 37, 42, 0.07);
-  /* No scale — avoids overflow clipping on rotated cards */
   transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .photo-grid-card:hover {
   box-shadow: 0 20px 36px rgba(48, 37, 42, 0.13);
-  /* lift only, no scale */
 }
 
 .photo-grid-img-wrap {
   width: 100%;
-  /* Tall enough for portrait screenshots without being excessive */
-  aspect-ratio: 3 / 4;
+  /* 4:5 ratio — good for portrait screenshots, not excessively tall on mobile */
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 1rem;
   background: #f7ede8;
@@ -334,7 +342,6 @@ img {
 .photo-grid-img {
   width: 100%;
   height: 100%;
-  /* cover + top so faces are always visible, not cropped */
   object-fit: cover;
   object-position: top center;
   display: block;
@@ -345,7 +352,7 @@ img {
   transform: scale(1.03);
 }
 
-/* ── Media Gallery ─────────────────────────────────────────── */
+/* ── Media Gallery ──────────────────────────────────────────── */
 
 .media-card {
   display: flex;
@@ -365,25 +372,21 @@ img {
   width: 100%;
 }
 
-/* Shimmer loading placeholder while video poster loads */
+.media-card-img {
+  display: block;
+  width: 100%;
+}
+
 @keyframes shimmer {
   0% { background-position: -400px 0; }
   100% { background-position: 400px 0; }
 }
 
-.media-card .rounded-\[1rem\] {
-  position: relative;
-  background: linear-gradient(90deg, #f7ede8 25%, #fdf3ef 50%, #f7ede8 75%);
-  background-size: 800px 100%;
-}
-
-/* Lightbox backdrop blur entrance */
 @keyframes backdropFadeIn {
   from { backdrop-filter: blur(0px); background: rgba(45, 32, 38, 0); }
   to   { backdrop-filter: blur(3px); background: rgba(45, 32, 38, 0.7); }
 }
 
-/* Video play button pulse */
 @keyframes playPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(185, 78, 107, 0.3); }
   50%       { box-shadow: 0 0 0 10px rgba(185, 78, 107, 0); }
@@ -393,24 +396,34 @@ img {
   animation: playPulse 2s ease-in-out infinite;
 }
 
-/* ── Responsive ────────────────────────────────────────────── */
+/* ── Responsive overrides ───────────────────────────────────── */
 
 @media (max-width: 640px) {
   .paper-card,
   .notebook,
   .story-board,
-  .starfield {
-    border-radius: 1.2rem;
+  .starfield,
+  .envelope {
+    border-radius: 1rem;
   }
 
-  .heart-doodle {
-    width: 30px;
-    height: 30px;
-    font-size: 1rem;
+  .photo-grid-img-wrap {
+    aspect-ratio: 1 / 1;
+  }
+
+  .envelope {
+    min-height: 120px;
   }
 
   .media-card-video,
-  .media-card img {
-    height: 180px;
+  .media-card-img {
+    height: 200px;
+  }
+}
+
+@media (min-width: 641px) {
+  .media-card-video,
+  .media-card-img {
+    height: 260px;
   }
 }
