@@ -238,21 +238,17 @@ function App() {
   }
 
   const selectedMemories = futureMemories.filter((item) => checkedItems[item])
-  const igPicksMessage = selectedMemories.length > 0
+  const waMessage = selectedMemories.length > 0
     ? `Hey Vivek! My picks from your page:\n${selectedMemories.map((item) => `- ${item}`).join('\n')}`
     : ''
 
   const handleSendPicks = (event) => {
     if (selectedMemories.length === 0) {
       event.preventDefault()
-      setShareMessage('Tick at least one thing first.')
+      setShareMessage('Tick at least one thing first. 😊')
       return
     }
-    // Copy message to clipboard then open Instagram
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(igPicksMessage).catch(() => {})
-    }
-    setShareMessage('Message copied! Paste it in the DM on Instagram. 💬')
+    setShareMessage('Opening WhatsApp... 💬')
   }
 
   return (
@@ -573,23 +569,17 @@ function App() {
           </div>
           <div className="mt-6 text-center">
             <a
-              href="https://ig.me/m/vikky_.53"
+              href={`https://wa.me/919106129458?text=${encodeURIComponent(waMessage)}`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleSendPicks}
               className="paper-button"
             >
-              📩 Send picks on Instagram
+              💬 Send picks on WhatsApp
             </a>
             <p className="mt-3 min-h-6 text-sm text-taupe" role="status" aria-live="polite">
               {shareMessage}
             </p>
-            {shareMessage && selectedMemories.length > 0 && (
-              <div className="mx-auto mt-3 max-w-sm rounded-[1rem] border border-[#e7d6cd] bg-[#fff4ef] p-4 text-left">
-                <p className="mb-1 text-xs font-medium text-taupe">Message copied to clipboard ✓ — just paste it in the DM:</p>
-                <pre className="whitespace-pre-wrap font-sans text-sm text-ink">{igPicksMessage}</pre>
-              </div>
-            )}
           </div>
         </motion.section>
 
